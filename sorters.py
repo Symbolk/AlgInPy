@@ -1,4 +1,5 @@
 import random
+from collections import deque
 
 
 def bubble_sort(arr):
@@ -69,7 +70,7 @@ def merge2(arr, l, mid, r):
     while i <= mid and j <= r:
         if arr[i] < arr[j]:
             temp[k] = arr[i]
-            i+=1
+            i += 1
         else:
             temp[k] = arr[j]
             j += 1
@@ -113,17 +114,18 @@ def quick_sort(arr, l, r):
         i, j = l, r
         pivot = arr[l]
         while i != j:
-            while j > i and arr[j] > pivot:
-                j -= 1
+            while j > i and arr[j] > pivot: # scan from right to left
+                j -= 1 # find the last element <= pivot
             if j > i:
                 arr[i] = arr[j]
                 i += 1
-            while i < j and arr[i] < pivot:
-                i += 1
+            while i < j and arr[i] < pivot: # scan from left to right
+                i += 1 # find the first element >= pivot
             if i < j:
                 arr[j] = arr[i]
                 j -= 1
         arr[i] = pivot
+        # now [l:i-1] <= pivot and [i+1:r] >= pivot
         quick_sort(arr, l, i - 1)
         quick_sort(arr, i + 1, r)
     return arr
@@ -149,13 +151,50 @@ def partition(arr, l, r):
     return counter
 
 
+def heap_sort(arr):
+    # index start from 1
+    heap = deque(arr)
+    heap.appendleft(0)
+
+    length = len(heap) - 1
+    # the last node with children
+    last_non_leaf = length >> 1
+    for i in range(last_non_leaf):
+        heapify(heap, last_non_leaf - i, length)
+
+    for i in range(length - 1):
+        heap[1], heap[length - i] = heap[length - i], heap[1]
+        heapify(heap, 1, length - i - 1)
+
+    return [heap[i] for i in range(1, len(heap))]
+
+
+def heapify(heap, start, end):
+    tmp = heap[start]  # parent
+    i = start  # left child index
+    j = i * 2  # right child index
+
+    while j <= end:
+        if j < end and heap[j] < heap[j + 1]:
+            j += 1  # record the index of the larger child
+        if tmp < heap[j]:  # if the parent is smaller than child
+            heap[i] = heap[j]  # switch the child with the parent
+            # adjust the next level
+            i = j
+            j = i * 2
+        else:
+            break
+    heap[i] = tmp
+
+
 if __name__ == "__main__":
-    arr = [random.randint(-100, 100) for _ in range(10)]
+    arr = [random.randint(0, 100) for _ in range(10)]
     # print(bubble_sort(arr))
     # print(selection_sort(arr))
     # print(insertion_sort(arr))
     # print(merge_sort(arr))
     # print(merge_sort_in_place(arr, 0, len(arr) - 1))
-    print(merge_sort2(arr, 0, len(arr) - 1))
+    # print(merge_sort2(arr, 0, len(arr) - 1))
     print(quick_sort(arr, 0, len(arr) - 1))
-    print(quick_sort2(arr, 0, len(arr) - 1))
+    # print(quick_sort2(arr, 0, len(arr) - 1))
+    # print(heap_sort(arr))
