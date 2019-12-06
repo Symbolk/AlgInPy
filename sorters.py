@@ -198,3 +198,5 @@ if __name__ == "__main__":
     print(quick_sort(arr, 0, len(arr) - 1))
     # print(quick_sort2(arr, 0, len(arr) - 1))
     # print(heap_sort(arr))
+    for i in range(2, 4):
+        print(i)
