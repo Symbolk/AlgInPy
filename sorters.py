@@ -36,9 +36,10 @@ def insertion_sort(arr):
 
 def merge_sort(arr):
     length = len(arr)
+    # for sorting, 0/1 return instantly
     if length < 2:
         return arr
-    mid = length >> 1
+    mid = length >> 1  # length/2
     left = arr[:mid]
     right = arr[mid:]
     return merge(merge_sort(left), merge_sort(right))
@@ -114,13 +115,13 @@ def quick_sort(arr, l, r):
         i, j = l, r
         pivot = arr[l]
         while i != j:
-            while j > i and arr[j] > pivot: # scan from right to left
-                j -= 1 # find the last element <= pivot
+            while j > i and arr[j] > pivot:  # scan from right to left
+                j -= 1  # find the last element <= pivot
             if j > i:
                 arr[i] = arr[j]
                 i += 1
-            while i < j and arr[i] < pivot: # scan from left to right
-                i += 1 # find the first element >= pivot
+            while i < j and arr[i] < pivot:  # scan from left to right
+                i += 1  # find the first element >= pivot
             if i < j:
                 arr[j] = arr[i]
                 j -= 1
