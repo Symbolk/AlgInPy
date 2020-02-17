@@ -1,1 +1,1 @@
-## Algorithm Weapons in Python 3
+## LeetCode Exercises in Python 3
