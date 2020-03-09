@@ -61,7 +61,36 @@ class Solution(object):
             next_level = []
         return 0
 
+    # Double-ended BFS
+    def ladderLength3(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        wordList = set(wordList)
+        if endWord not in wordList:
+            return 0
+        front = {beginWord}
+        back = {endWord}
+        res = 1
+        L = len(beginWord)
 
-if __name__ == "__main__":
-    solution = Solution()
-    print(solution.ladderLength2("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]))
+        import string
+        while front:
+            res += 1
+            next = set()
+            for word in front:
+                for i in range(L):
+                    for c in string.ascii_lowercase:
+                        if c != word[i]:
+                            new_word = word[:i] + c + word[i + 1:]
+                            if new_word in back:
+                                return res
+                            if new_word in wordList:
+                                next.add(new_word)
+                                wordList.remove(new_word)
+            front = next
+            if len(back) < len(front):
+                front, back = back, front
+        return 0
+
+
+solution = Solution()
+print(solution.ladderLength2("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]))
+print(solution.ladderLength3("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]))
