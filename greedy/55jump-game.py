@@ -15,7 +15,7 @@ class Solution:
             return False
 
     # from start
-    def canJump(self, nums: List[int]) -> bool:
+    def canJump2(self, nums: List[int]) -> bool:
         far = 0
         for i, jump in enumerate(nums):
             if i > far:
