@@ -8,6 +8,7 @@ class PriorityQueue(object):
         self._index = 0
 
     def push(self, item, priority):
+        # if priority bigger = better, should use -priority
         heapq.heappush(self._queue, (priority, self._index, item))
         self._index += 1
 
@@ -20,28 +21,35 @@ class PriorityQueue(object):
 
 class Solution:
     def shortestPathBinaryMatrix0(self, grid: List[List[int]]) -> int:
-        def manDis(x1, y1, x2, y2):
-            return abs(x1 - x2) + abs(y1 - y2)
-
+        # distance to the dest
         N = len(grid)
         if not grid or grid[0][0] == 1 or grid[N - 1][N - 1] == 1:
             return -1
         elif N <= 2:
             return N
+
+        def distance(x, y):
+            return max(abs(N - 1 - x), abs(N - 1 - y))
+
         pq = []
-        min_step = N * N
-        heapq.heappush(pq, (manDis(0, 0, N - 1, N - 1), (0, 0, 1)))
+        visited = set()
+        heapq.heappush(pq, (0, (0, 0, 1)))
         move = [(-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0)]
         while pq:
-            dis, (i, j, step) = heapq.heappop(pq)
+            # get the one with min distance + step
+            _, (i, j, step) = heapq.heappop(pq)
+            if (i, j) in visited:
+                continue
+            visited.add((i, j))
+
             for dx, dy in move:
-                nextI, nextJ = i + dx, j + dy
-                if nextI == N - 1 and nextJ == N - 1:
-                    min_step = min(step + 1, min_step)
-                if 0 <= nextI < N - 1 and 0 <= nextJ < N - 1 and grid[nextI][nextJ] == 0:
-                    heapq.heappush(pq, (manDis(nextI, nextJ, N - 1, N - 1), (nextI, nextJ, step + 1)))
-                    grid[nextI][nextJ] = 1
-        return min_step
+                next_i, next_j = i + dx, j + dy
+                if next_i == N - 1 and next_j == N - 1:
+                    return step + 1
+                # !here next_i can be N-1 or next_j can be N-1, so cannot use < N - 1
+                if 0 <= next_i < N and 0 <= next_j < N and grid[next_i][next_j] == 0:
+                    heapq.heappush(pq, (step + distance(next_i, next_j), (next_i, next_j, step + 1)))
+        return -1
 
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
         N = len(grid)
@@ -109,3 +117,5 @@ sol = Solution()
 print(sol.shortestPathBinaryMatrix0(
     [[0, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 0], [1, 1, 0, 1, 0, 0], [0, 1, 0, 0, 1, 1], [0, 1, 0, 0, 0, 1],
      [0, 0, 1, 0, 0, 0]]))
+
+print(sol.shortestPathBinaryMatrix0([[0, 0, 0], [1, 1, 0], [1, 1, 0]]))
