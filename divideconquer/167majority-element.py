@@ -12,8 +12,8 @@ class Solution:
 
     # hash table (O(n), O(n))
     def majorityElement2(self, nums: List[int]) -> int:
-        import collections
-        counts = collections.Counter(nums)
+        from collections import Counter
+        counts = Counter(nums)
         return max(counts.keys(), key=counts.get)
 
     # hash table (O(n), O(n))
