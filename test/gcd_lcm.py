@@ -7,6 +7,12 @@ def gcd2(a, b):
     return a if b == 0 else gcd(b, a % b)
 
 
+def gcd3(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+
 # Least Common Multiple
 def lcm(a, b):
     return int(a / gcd(a, b) * b)
@@ -16,4 +22,5 @@ def lcm(a, b):
 n, m = map(int, input().split())
 print(gcd(n, m), end=", ")
 print(gcd2(n, m), end=',')
+print(gcd3(n, m), end=',')
 print(lcm(n, m))
