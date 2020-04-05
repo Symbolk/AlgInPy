@@ -40,6 +40,7 @@ class LRUCache1(OrderedDict):
     def get(self, key):
         if key not in self:
             return -1
+        # move_to_end(key, last): move to the front(last=False) or tail(last=True or default)
         self.move_to_end(key)
         return self[key]
 
@@ -48,6 +49,7 @@ class LRUCache1(OrderedDict):
             self.move_to_end(key)
         self[key] = value
         if len(self) > self.capacity:
+            # last=True(default): remove the last item; last=False: remove the first item (FIFO)
             self.popitem(last=False)
 
 
