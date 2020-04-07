@@ -36,7 +36,7 @@ class Solution:
 
 
 INT_MAX = 2 ** 31 - 1
-# INT_MAX = 1 << 31
+# INT_MAX = int((1 << 31) - 1)
 INT_MIN = -2 ** 31
 
 
