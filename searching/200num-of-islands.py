@@ -38,6 +38,7 @@ class Solution:
         from collections import deque
         def bfs(i, j):
             q = deque()
+            # appendleft() and pop() (right) == append() and popleft()
             q.appendleft((i, j))
             grid[i][j] = '0'
             while q:

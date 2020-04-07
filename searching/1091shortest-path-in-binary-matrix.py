@@ -64,6 +64,7 @@ class Solution:
         grid[0][0] = 1
         move = [(-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0)]
         while queue:
+            # queue pop(0): O(n), use deque.popleft(): O(1) next time
             i, j, step = queue.pop(0)
             for dx, dy in move:
                 nextI, nextJ = i + dx, j + dy

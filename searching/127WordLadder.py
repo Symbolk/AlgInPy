@@ -61,7 +61,7 @@ class Solution(object):
             next_level = []
         return 0
 
-    # Double-ended BFS
+    # bidirectional BFS
     def ladderLength3(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         wordList = set(wordList)
         if endWord not in wordList:
