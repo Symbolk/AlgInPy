@@ -19,8 +19,8 @@ while True:
 
 # 输入一个整数，告诉我们接下来有多少组数据，然后在输入每组数据的具体值。
 
-tcase = int(input().strip())
-for case in range(tcase):
+N = int(input().strip())
+for case in range(N):
     a, b = map(int, input().strip().split())
     print(a + b, end=",")
 
@@ -34,8 +34,8 @@ while True:
 
 # 输入有多组，并却题目告诉你每组输入遇见什么结束，与第三种不同之处在于，每组输入都有相应的细化。
 
-tcase = int(input().strip())
-for case in range(tcase):
+N = int(input().strip())
+for case in range(N):
     a, b = map(int, input().strip().split())
     if a == 0 and b == 0:
         break
@@ -43,9 +43,9 @@ for case in range(tcase):
 
 # 这次的输入实现输入一个整数，告诉我们有多少行，在输入每一行。对于每一行的输入，有划分为第一个数和其他的数，第一个数代表那一组数据一共有多少输入。
 
-tcase = int(input().strip())
-for case in range(tcase):
-    data = map(int, input().strip().split())
+N = int(input().strip())
+for case in range(N):
+    data = list(map(int, input().strip().split()))
     n, array = data[0], data[1:]
 
     sum = 0
@@ -57,13 +57,17 @@ for case in range(tcase):
 
 while True:
     try:
-        data = map(int, input().strip().split())
+        data = list(map(int, input().strip().split()))
         n, array = data[0], data[1:]
+
+        if n == 0:
+            break
 
         sum = 0
         for i in range(n):
             sum += array[i]
         print(sum, end=",")
+        # print(int(reduce(lambda x, y: int(x) + int(y), arr)))
     except EOFError:
         raise
 
@@ -83,7 +87,7 @@ while True:
     if data.isspace():
         break
     else:
-        data = map(int, data)
+        data = list(map(int, data))
         n, array = data[0], data[1:]
 
         sum = 0
