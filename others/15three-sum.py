@@ -3,6 +3,7 @@ from typing import List
 
 class Solution:
     # sort and enumerate with pruning: O(n^2), O(1)
+    # O(n^2) is good enough
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         N = len(nums)
         if N < 3:
@@ -18,7 +19,7 @@ class Solution:
                 # avoid duplicate res
                 continue
             # i, c in (k, len(nums))
-            i, j = k + 1, len(nums) - 1
+            i, j = k + 1, N - 1
             while i < j:
                 s = nums[k] + nums[i] + nums[j]
                 if s < 0:
