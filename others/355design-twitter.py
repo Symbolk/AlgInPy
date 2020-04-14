@@ -85,7 +85,8 @@ class Twitter2:
         for uid in self.users[userId]['F']:
             allT.extend(list(self.users[uid]['T']))
         # default: min heap
-        return [T[1] for T in heapython heap n largest复杂度pq.nlargest(10, allT)]
+        # get top k with nlargest(): time complexity: O(log(k) * n)
+        return [T[1] for T in heapq.nlargest(10, allT)]
 
     def follow(self, followerId: int, followeeId: int) -> None:
         if followerId not in self.users:

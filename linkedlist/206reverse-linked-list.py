@@ -9,10 +9,14 @@ class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         cur, pre = head, None
         while cur:
-            cur.next, pre, cur = pre, cur, cur.next
+            # revert
+            cur.next = pre
+            # move forward by 1 step
+            pre = cur
+            cur = cur.next
         return pre
 
-    # recursion: O()
+    # recursion: O(n), O(n)
     def reverseList1(self, head: ListNode) -> ListNode:
         # base case/terminator
         if not head or not head.next:
