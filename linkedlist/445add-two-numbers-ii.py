@@ -42,7 +42,7 @@ class Solution:
             s2.append(l2.val)
             l2 = l2.next
 
-        # dummy node
+        # dummy node (better than the first one)
         head = ListNode()
         carry = 0
         while s1 or s2 or carry != 0:
