@@ -2,27 +2,26 @@ from typing import List
 
 
 class Solution:
-    # from end
+    # from end: O(n), O(1)
     def canJump(self, nums: List[int]) -> bool:
         N = len(nums)
         last = N - 1
         for i in range(N - 2, -1, -1):
             if nums[i] >= (last - i):
                 last = i
-        if last == 0:
-            return True
-        else:
-            return False
+        return last == 0
 
-    # from start
+
+    # from start: O(n), O(1)
     def canJump2(self, nums: List[int]) -> bool:
-        far = 0
+        rightmost = 0
         for i, jump in enumerate(nums):
-            if i > far:
+            if i > rightmost:
                 return False
-            if far >= i and i + jump > far:
-                far = i + jump
-        return far >= i
+            if i <= rightmost < i + jump:
+                rightmost = i + jump
+        # i also keeps the last position
+        return rightmost >= nums[-1]
 
 
 sol = Solution()
