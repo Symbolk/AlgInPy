@@ -24,6 +24,7 @@ class Solution:
                     # entire sentence is filled
                     if index == N:
                         # put next sentence
+                        # divmod(x, y) == (x//y, x%y)
                         div, mod = divmod(remain_cols, length)
                         res += (div + 1)
                         remain_cols = mod
