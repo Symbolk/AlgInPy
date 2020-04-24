@@ -31,8 +31,11 @@ class NumArray:
 
     def update(self, i: int, val: int) -> None:
         self.ft.update(i + 1, val - self.nums[i])
+        self.nums[i] = val
 
     def sumRange(self, i: int, j: int) -> int:
+        if j + 1 > len(self.nums):
+            j = len(self.nums) - 1
         return self.ft.query(j + 1) - self.ft.query(i)
 
 
@@ -41,7 +44,14 @@ class NumArray:
 # obj.update(i,val)
 # param_2 = obj.sumRange(i,j)
 
-arr = NumArray([1, 3, 5])
-print(arr.sumRange(0, 2))
-print(arr.update(1, 2))
-print(arr.sumRange(0, 2))
+# arr = NumArray([1, 3, 5])
+# print(arr.sumRange(0, 2))
+# print(arr.update(1, 2))
+# print(arr.sumRange(0, 2))
+
+arr = NumArray([7, 2, 7, 2, 0])
+arr.update(4, 6)
+arr.update(0, 2)
+arr.update(0, 9)
+arr.update(4, 4)
+print(arr.sumRange(3, 8))

@@ -33,7 +33,7 @@ def insertion_sort(arr):
         arr[pre_index + 1] = current
     return arr
 
-
+# iteratively merge_sort sub-array (python slicing makes it tidier)
 def merge_sort(arr):
     length = len(arr)
     # for sorting, 0/1 return instantly
@@ -49,11 +49,12 @@ def merge(left, right):
     res = []
     while len(left) > 0 and len(right) > 0:
         # while left and right:
+        # < --> unstable
         res.append(left.pop(0) if left[0] < right[0] else right.pop(0))
     res = res + left + right
     return res
 
-
+# use index to divide and conquer (regular way)
 def merge_sort2(arr, l, r):
     if l < r:
         mid = l + ((r - l) >> 1)
@@ -87,7 +88,7 @@ def merge2(arr, l, mid, r):
     for i in range(len(temp)):
         arr[l + i] = temp[i]
 
-
+# directly merge into the original arr
 def merge_sort_in_place(arr, l, r):
     if l < r:
         mid = l + ((r - l) >> 1)
