@@ -20,7 +20,7 @@ class Solution:
             cur = cur.next
         return head.next
 
-    # iteration: compare and link O(n+m), O(1)
+    # iteration: compare and link O(n+m), O(1) (no need to create new ListNode)
     def mergeTwoLists1(self, l1: ListNode, l2: ListNode) -> ListNode:
         head = cur = ListNode(None)
         while l1 and l2:
@@ -39,7 +39,7 @@ class Solution:
         #     cur.next = l2
         return head.next
 
-    # recursion: O(n+m), O(n+m)
+    # recursion: O(n+m), O(n+m) (recursion stack depth)
     def mergeTwoLists2(self, l1: ListNode, l2: ListNode) -> ListNode:
         if l1 and l2:
             if l1.val > l2.val:
@@ -60,4 +60,3 @@ class Solution:
         else:
             return l1 or l2
 
-        return l1 or l2

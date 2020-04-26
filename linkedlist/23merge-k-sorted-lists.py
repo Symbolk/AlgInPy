@@ -16,7 +16,7 @@ class Solution:
         from queue import PriorityQueue
         head = cur = ListNode(None)
         q = PriorityQueue()
-        # in python3, defined type cannot be compared, so we need an incremental index
+        # in python3, defined type cannot be compared, so we need an incremental and unique index
         i = 0
         for l in lists:
             if l:
@@ -41,15 +41,15 @@ class Solution:
             while l:
                 nums.append(l.val)
                 l = l.next
-        head = ListNode(0)
-        cur = head
+        head = cur = ListNode(None)
         for n in sorted(nums):
             cur.next = ListNode(n)
             cur = cur.next
 
         return head.next
 
-    # min heap to simulate priority queue, to avoid using k pointers to get the min
+    # min heap to simulate priority queue, to avoid using k pointers to get the min(O(nk))
+    # O(nlogk), O(n)
     def mergeKLists2(self, lists: List[ListNode]) -> ListNode:
         import heapq
         head = cur = ListNode(None)
@@ -68,6 +68,25 @@ class Solution:
             if lists[i]:
                 heapq.heappush(heap, (lists[i].val, i))
                 lists[i] = lists[i].next
+        return head.next
+
+    # heapq does not require incremental i
+    def mergeKLists22(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return None
+        import heapq
+        heap = []
+
+        for l in lists:
+            while l:
+                heapq.heappush(heap, l.val)
+                l = l.next
+
+        head = cur = ListNode(None)
+        while heap:
+            cur.next = ListNode(heapq.heappop(heap))
+            cur = cur.next
+
         return head.next
 
     def merge2Lists(self, l1, l2):
@@ -94,3 +113,17 @@ class Solution:
                 lists[i] = self.merge2Lists(lists[i], lists[i + interval])
             interval *= 2
         return lists[0]
+
+    # binary divide and conquer: O(nlogk)
+    def mergeKLists4(self, lists: List[ListNode]) -> ListNode:
+        def merge(lists, l, r):
+            if l == r:
+                return lists[l]
+            m = l + ((r - l) >> 1)
+            left = merge(lists, l, m)
+            right = merge(lists, m + 1, r)
+            return self.merge2Lists(left, right)
+
+        if not lists:
+            return None
+        return merge(lists, 0, len(lists) - 1)
