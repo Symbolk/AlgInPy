@@ -49,7 +49,8 @@ class NumArray:
 # print(arr.update(1, 2))
 # print(arr.sumRange(0, 2))
 
-arr = NumArray([7, 2, 7, 2, 0])
+# arr = NumArray([7, 2, 7, 2, 0])
+arr = NumArray([1, 3, 9, 8, 2])
 arr.update(4, 6)
 arr.update(0, 2)
 arr.update(0, 9)
