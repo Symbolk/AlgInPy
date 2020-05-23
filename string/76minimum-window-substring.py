@@ -1,8 +1,42 @@
 class Solution:
-    def minWindow(self, s: str, t: str) -> str:
+    # possible duplicates in t
+    # sliding window
+    def minWindow0(self, s: str, t: str) -> str:
+        if len(s) < len(t) or not t:
+            return ''
+        from collections import Counter, defaultdict
+        need = Counter(t)
+        window = defaultdict(lambda: 0)
+        l, r = 0, 0
+        valid = 0
+        start = 0  # save the start of the final substring
+        min_len = len(s) + 1
+        while r < len(s):
+            cr = s[r]
+            if cr in need:
+                window[cr] += 1
+                if window[cr] == need[cr]:
+                    valid += 1
+            r += 1
+
+            while valid == len(need):
+                # [l, r)
+                if r - l < min_len:
+                    start = l
+                    min_len = r - l
+                cl = s[l]
+                if cl in need:
+                    if window[cl] == need[cl]:
+                        valid -= 1
+                    window[cl] -= 1
+                l += 1
+
+        return '' if min_len == len(s) + 1 else s[start:start + min_len]
+
+    def minWindow1(self, s: str, t: str) -> str:
         from collections import Counter
         # a dict/map with unique key
-        # NOTICE: len(counter) not neccessary equals len(t)
+        # NOTICE: len(counter) not necessarily equals len(t)
         counter = Counter(t)
 
         l, num = 0, 0
@@ -27,39 +61,39 @@ class Solution:
         return res
 
     # incorrect
-    def minWindow1(self, s: str, t: str) -> str:
-        # NOT LIMITED TO UPPERCASE!!!
-        # ord("A") = 65
-        sArr = [ord(i) - 65 for i in s]
-        tArr = [ord(i) - 65 for i in t]
-        counter = [0 for _ in range(26)]
-        l, r, start = 0, 0, 0
-        num = 0
-        M, N = len(s), len(t)
-        for i in range(N):
-            counter[tArr[i]] += 1
-
-        import sys
-        minLen = sys.maxsize
-        for r in range(M):
-            if counter[sArr[r]] == 0:
-                continue
-            counter[sArr[r]] -= 1
-            if counter[sArr[r]] == 0:
-                num += 1
-            while num == N and l <= r:
-                if r - l < minLen:
-                    start = l
-                    minLen = r - l
-                if counter[sArr[l]] > 0:
-                    counter[sArr[l]] += 1
-                if counter[sArr[l]] == 1:
-                    num -= 1
-                l += 1
-
-        return "" if minLen == sys.maxsize else s[start:start + minLen]
+    def minWindow2(self, s: str, t: str) -> str:
+        if len(s) < len(t) or not t:
+            return ''
+        from collections import defaultdict
+        need = defaultdict(lambda: 0)
+        window = defaultdict(lambda: 0)
+        for tc in t:
+            need[tc] += 1
+        min_len = len(s) + 1
+        start, end = 0, 0  # final result
+        distance = 0
+        l, r = 0, 0
+        while r < len(s):
+            cr = s[r]
+            if window[cr] < need[cr]:
+                distance += 1
+            window[cr] += 1
+            r += 1
+            while distance == len(t):
+                cl = s[l]
+                if window[cl] > need[cl]:
+                    window[cl] -= 1
+                    l += 1
+                else:
+                    if r - l < min_len:
+                        min_len = r - l
+                        start, end = l, r
+                    break
+        return '' if min_len == len(s) + 1 else s[start:end]
 
 
 sol = Solution()
-print(sol.minWindow("ADOBECODEBANC", "ABC"))
-print(sol.minWindow("aa", "aa"))
+print(sol.minWindow0("ADOBECODEBANC", "ABC"))
+print(sol.minWindow1("ADOBECODEBANC", "ABC"))
+print(sol.minWindow2("ADOBECODEBANC", "ABC"))
+print(sol.minWindow1("aa", "aa"))

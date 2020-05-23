@@ -26,7 +26,7 @@ class Solution:
         import sys
         res = 0 - sys.maxsize
         imax, imin = 1, 1
-        for _, n in enumerate(nums):
+        for n in nums:
             if n < 0:
                 imax, imin = imin, imax
             imax = max(n, imax * n)
