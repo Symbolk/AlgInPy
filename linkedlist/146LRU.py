@@ -32,9 +32,11 @@ class LRUCache:
 
 
 # 2. extend OrderedDict
+# get/put: O(1)
 class LRUCache1(OrderedDict):
 
     def __init__(self, capacity):
+        super().__init__()
         self.capacity = capacity
 
     def get(self, key):
@@ -53,7 +55,7 @@ class LRUCache1(OrderedDict):
             self.popitem(last=False)
 
 
-# 3. hash + implement a +double linked list
+# 3. hash + implement a double linked list
 class ListNode:
     def __init__(self, key=None, value=None):
         self.key = key
@@ -61,14 +63,15 @@ class ListNode:
         self.prev = None
         self.next = None
 
-
+# tail is the recent used
 class LRUCache2:
     def __init__(self, capacity):
         self.capacity = capacity
-        # key:node
+        # dict() key:node
         self.hashmap = {}
         # init the double-end linked list
-        self.head = ListNode()  # dummy node to represent the head
+        # dummy nodes
+        self.head = ListNode()
         self.tail = ListNode()
         # !must be updated bidirectionally
         self.head.next = self.tail
@@ -98,12 +101,13 @@ class LRUCache2:
             self.hashmap[key].value = value
             self.move_to_tail(key)
         else:
-            # add
+            # add a new node
             if len(self.hashmap) == self.capacity:
                 # full so remove the least recently use
-                self.hashmap.pop(self.head.next.key)
                 self.head.next = self.head.next.next
                 self.head.next.prev = self.head
+                self.hashmap.pop(self.head.next.key) # pop(key, [default]): remove by key and return value, if not exist, return default
+
             new = ListNode(key, value)
             self.hashmap[key] = new
             new.prev = self.tail.prev
