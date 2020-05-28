@@ -1,6 +1,6 @@
 from typing import List
 
-
+# 树状数组
 class FenwickTree:
     def __init__(self, size):
         self.size = size
