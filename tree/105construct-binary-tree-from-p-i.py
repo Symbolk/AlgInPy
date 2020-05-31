@@ -9,18 +9,22 @@ class Solution:
     # recursion: O(n), O(n)
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         def build(pos, pleft, pright, ileft, iright):
+            # terminator
             if pleft > pright or ileft > iright:
                 return None
             root_val = preorder[pleft]
             root = TreeNode(root_val)
             root_index = pos[root_val]
-            root.left = build(pos, pleft + 1, root_index + pleft - ileft, ileft, root_index - 1)
-            root.right = build(pos, root_index + pleft - ileft + 1, pright, root_index + 1, iright)
+            # left subtree: pre:  [pleft+1, pleft + root_index-ileft]; in: [ileft, root_index - 1], length: root_index-1-ileft+1
+            root.left = build(pos, pleft + 1, pleft + root_index - ileft, ileft, root_index - 1)
+            # right subtree: pre: [pleft+root_index-ileft+1, pright]; in: [root_index+1, iright]
+            root.right = build(pos, pleft + root_index - ileft + 1, pright, root_index + 1, iright)
             return root
 
         pleft, pright = 0, len(preorder) - 1
         ileft, iright = 0, len(inorder) - 1
 
+        # use hashmap to store val pos in inorder (only when value is unique)
         pos = {}
         for i in range(len(inorder)):
             pos[inorder[i]] = i
