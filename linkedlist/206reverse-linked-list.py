@@ -10,10 +10,18 @@ class Solution:
         cur, pre = head, None
         while cur:
             # revert
+            tmp = cur.next
             cur.next = pre
             # move forward by 1 step
             pre = cur
-            cur = cur.next
+            cur = tmp
+        # return the new head node
+        return pre
+
+    def reverseList0(self, head: ListNode) -> ListNode:
+        cur, pre = head, None
+        while cur:
+            cur.next, pre, cur = pre, cur, cur.next
         return pre
 
     # recursion: O(n), O(n)
@@ -22,7 +30,7 @@ class Solution:
         if not head or not head.next:
             return head
         # cur is the last
-        cur = self.reverseList(head.next)
+        cur = self.reverseList1(head.next)
         head.next.next = head
         # to avoid loop
         head.next = None
