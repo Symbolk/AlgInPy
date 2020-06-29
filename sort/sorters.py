@@ -33,6 +33,7 @@ def insertion_sort(arr):
         arr[pre_index + 1] = current
     return arr
 
+
 # iteratively merge_sort sub-array (python slicing makes it tidier)
 def merge_sort(arr):
     length = len(arr)
@@ -53,6 +54,7 @@ def merge(left, right):
         res.append(left.pop(0) if left[0] < right[0] else right.pop(0))
     res = res + left + right
     return res
+
 
 # use index to divide and conquer (regular way)
 def merge_sort2(arr, l, r):
@@ -88,6 +90,7 @@ def merge2(arr, l, mid, r):
     for i in range(len(temp)):
         arr[l + i] = temp[i]
 
+
 # directly merge into the original arr
 def merge_sort_in_place(arr, l, r):
     if l < r:
@@ -111,46 +114,49 @@ def merge_in_place(arr, l, mid, r):
         k += 1
 
 
+# iteration
 def quick_sort(arr, l, r):
-    if l < r:
-        i, j = l, r
-        pivot = arr[l]
-        while i != j:
-            while j > i and arr[j] > pivot:  # scan from right to left
-                j -= 1  # find the last element <= pivot
-            if j > i:
-                arr[i] = arr[j]
-                i += 1
-            while i < j and arr[i] < pivot:  # scan from left to right
-                i += 1  # find the first element >= pivot
-            if i < j:
-                arr[j] = arr[i]
-                j -= 1
-        arr[i] = pivot
-        # now [l:i-1] <= pivot and [i+1:r] >= pivot
-        quick_sort(arr, l, i - 1)
-        quick_sort(arr, i + 1, r)
-    return arr
-
-
-def quick_sort2(arr, l, r):
     if l >= r:
         return arr
-    pivot = partition(arr, l, r)
-    quick_sort(arr, l, pivot - 1)
-    quick_sort(arr, pivot + 1, r)
+    # pivot_index = partition1(arr, l, r)
+    pivot_index = partition2(arr, l, r)
+    quick_sort(arr, l, pivot_index - 1)
+    quick_sort(arr, pivot_index + 1, r)
     return arr
 
 
-def partition(arr, l, r):
-    pivot = r
+# single loop
+def partition1(arr, l, r):
+    # first or random as the pivot
+    pivot = arr[l]
     index = l
-    for i in range(l, r):
-        if arr[i] < arr[pivot]:
-            arr[index], arr[i] = arr[i], arr[index]
+    for i in range(l + 1, r + 1):
+        if arr[i] < pivot:
             index += 1
-    arr[pivot], arr[index] = arr[index], arr[pivot]
+            arr[index], arr[i] = arr[i], arr[index]
+    arr[l], arr[index] = arr[index], arr[l]
     return index
+
+
+# double loop
+def partition2(arr, l, r):
+    pivot = arr[l]
+    index = l
+
+    while l != r:
+        # scan from right to left, find the last element <= pivot
+        while l < r and arr[r] > pivot:
+            r -= 1
+        # scan from left to right, find the first element > pivot
+        while l < r and arr[l] <= pivot:
+            l += 1
+        if l < r:
+            arr[l], arr[r] = arr[r], arr[l]
+
+        # arr[index] = arr[l]
+        # arr[l] = pivot
+        arr[index], arr[l] = arr[l], pivot
+    return l
 
 
 def heap_sort(arr):
@@ -200,5 +206,3 @@ if __name__ == "__main__":
     print(quick_sort(arr, 0, len(arr) - 1))
     # print(quick_sort2(arr, 0, len(arr) - 1))
     # print(heap_sort(arr))
-    for i in range(2, 4):
-        print(i)

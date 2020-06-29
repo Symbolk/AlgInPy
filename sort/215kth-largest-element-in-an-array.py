@@ -48,6 +48,8 @@ class Solution:
                 j += 1
                 nums[i], nums[j] = nums[j], nums[i]
 
+        # nums[l] = nums[j]
+        # nums[j] = pivot
         nums[l], nums[j] = nums[j], nums[l]
         # [l+1, j] < pivot, (j, i) >= pivot
         return j
