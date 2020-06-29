@@ -12,23 +12,22 @@ def findK(arr, k):
     while i != n - k:
         if i > n - k:
             r = i - 1
-            i = partition(arr, l, i - 1)
         else:
             l = i + 1
-            i = partition(arr, i + 1, r)
+        i = partition(arr, l, r)
     return arr[i]
 
 
-def partition(data_list, begin, end):
-    partition_key = data_list[end]
+def partition(nums, left, right):
+    pivot = nums[right]
 
-    index = begin
-    for i in range(begin, end):
-        if data_list[i] < partition_key:
-            data_list[i], data_list[index] = data_list[index], data_list[i]
+    index = left
+    for i in range(left, right):
+        if nums[i] < pivot:
+            nums[i], nums[index] = nums[index], nums[i]
             index += 1
 
-    data_list[index], data_list[end] = data_list[end], data_list[index]
+    nums[index], nums[right] = nums[right], nums[index]
     return index
 
 

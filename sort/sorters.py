@@ -144,13 +144,13 @@ def quick_sort2(arr, l, r):
 
 def partition(arr, l, r):
     pivot = r
-    counter = l
+    index = l
     for i in range(l, r):
         if arr[i] < arr[pivot]:
-            arr[counter], arr[i] = arr[i], arr[counter]
-            counter += 1
-    arr[pivot], arr[counter] = arr[counter], arr[pivot]
-    return counter
+            arr[index], arr[i] = arr[i], arr[index]
+            index += 1
+    arr[pivot], arr[index] = arr[index], arr[pivot]
+    return index
 
 
 def heap_sort(arr):
