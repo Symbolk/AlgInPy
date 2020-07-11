@@ -65,6 +65,7 @@ class Solution:
     # sort by reversed words
     def minimumLengthEncoding3(self, words: List[str]) -> int:
         N = len(words)
+        # define comparator to sort according to suffix
         words.sort(key=lambda w: w[::-1])
 
         res = 0
@@ -78,6 +79,7 @@ class Solution:
     # reversed words and sort
     def minimumLengthEncoding4(self, words: List[str]) -> int:
         N = len(words)
+        # reverse words and sort
         words = sorted([w[::-1] for w in words])
 
         res = 0
