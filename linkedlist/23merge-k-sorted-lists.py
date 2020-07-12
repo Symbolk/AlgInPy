@@ -15,22 +15,23 @@ class Solution:
     def mergeKLists0(self, lists: List[ListNode]) -> ListNode:
         from queue import PriorityQueue
         head = cur = ListNode(None)
+        # increase with priority
+        # default comparator for tuple: compare the first comparable element (l.val here)
+        # or overwrite __lt__ for user-defined types
         q = PriorityQueue()
         # in python3, defined type cannot be compared, so we need an incremental and unique index
-        i = 0
-        for l in lists:
+        for i, l in enumerate(lists):
             if l:
                 q.put((l.val, i, l))
-                i += 1
 
         while not q.empty():
-            val, _, node = q.get()
-            cur.next = ListNode(val)
+            val, i, node = q.get()
+            # cur.next = ListNode(val)
+            cur.next = node
             cur = cur.next
             node = node.next
             if node:
                 q.put((node.val, i, node))
-                i += 1
 
         return head.next
 
