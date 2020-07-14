@@ -2,15 +2,26 @@ from typing import List
 
 
 class Solution:
+    # O(n^2), O(n)
     def minimumTotal(self, triangle: List[List[int]]) -> int:
-        m = len(triangle)
-        n = len(triangle[m - 1])
-        dp = [0 for _ in range(n)]
-        for i in range(n):
-            dp[i] = triangle[m - 1][i]
+        # N rows, M cols in the last line
+        N = len(triangle)
+        M = len(triangle[N - 1])
+        dp = [0 for _ in range(M)]
+        for j in range(M):
+            dp[j] = triangle[N - 1][j]
 
-        for i in range(m - 2, -1, -1):
-            for j in range(len(triangle[i])):
+        for j in range(N - 2, -1, -1):
+            for j in range(len(triangle[j])):
+                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
+
+        return dp[0]
+
+    def minimumTotal1(self, triangle: List[List[int]]) -> int:
+        N = len(triangle)
+        dp = [0] * (N + 1)
+        for i in range(N - 1, -1, -1):
+            for j in range(i + 1):  # len(triangle) = i+1
                 dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
 
         return dp[0]
