@@ -49,16 +49,16 @@ class UnionFind:
         self.parent = list(range(n))
 
     # 隔代压缩
-    def find(self, x):
-        while x != self.parent[x]:
+    def find1(self, x):
+        while self.parent[x] != x:
             self.parent[x] = self.parent[self.parent[x]]
             x = self.parent[x]
         return x
 
     # 完全压缩
-    def find2(self, x):
+    def find(self, x):
         if self.parent[x] != x:
-            self.parent[x] = find(self.parent[x])
+            self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
 
     def union(self, x, y):
