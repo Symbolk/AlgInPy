@@ -10,8 +10,9 @@
 
 class Solution:
     # speed increasing
+    # (n=total number of elements, k= number of linkedlists)
 
-    # priority queue to get the min node every time: O(nlogk), O(n) (k=#linkedlists)
+    # priority queue to get the min node every time: O(nlogk), O(n)
     def mergeKLists0(self, lists: List[ListNode]) -> ListNode:
         from queue import PriorityQueue
         head = cur = ListNode(None)
