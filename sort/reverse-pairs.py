@@ -72,7 +72,8 @@ class Solution:
         temp = [0] * N
         return count(nums, 0, N - 1, temp)
 
-    # binary indexed tree/Fenwick Tree: O(nlogn), O(n)
+    # RMQ (Range Minimum/Maximum Query)
+    # BIT (binary indexed tree/Fenwick Tree): O(nlogn), O(n)
     # Fenwick Tree was proposed to solve the prefix sum problem of a dynamic array in O(logn)
     def reversePairs2(self, nums: List[int]) -> int:
         N = len(nums)
@@ -89,11 +90,13 @@ class Solution:
             def __lowbit(self, index):
                 return index & (-index)
 
+            # O(logn)
             def update(self, index, delta):
                 while index <= self.size:
                     self.tree[index] += delta
                     index += self.__lowbit(index)
 
+            # O(logn)
             def query(self, index):
                 res = 0
                 while index > 0:
