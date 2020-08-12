@@ -68,8 +68,59 @@ class Solution:
                 elif board[i][j] == '#':
                     board[i][j] = 'O'
 
+    # disjoint set
+    def solve2(self, board: List[List[str]]) -> None:
+        if not board:
+            return
+        if not board[0]:
+            return
+        N, M = len(board), len(board[0])
+
+        p = {}
+
+        def find(x):
+            p.setdefault(x, x)
+            if p[x] != x:
+                p[x] = find(p[x])
+            return p[x]
+
+        def find1(x):
+            p.setdefault(x, x)
+            while p[x] != x:
+                p[x] = p[p[x]]
+                x = p[x]
+            return p[x]
+
+        def union(x, y):
+            p[find(x)] = find(y)
+
+        def isConnected(x, y):
+            return find(x) == find(y)
+
+        dummy = N * M
+        move = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        for i in range(N):
+            for j in range(M):
+                if board[i][j] == 'O':
+                    if i == 0 or i == N - 1 or j == 0 or j == M - 1:
+                        # linked border O with dummy
+                        union(i * M + j, dummy)
+                    else:
+                        # link other O with each other
+                        for dx, dy in move:
+                            if board[i + dx][j + dy] == 'O':
+                                union(i * M + j, (i + dx) * M + (j + dy))
+        for i in range(N):
+            for j in range(M):
+                if isConnected(i * M + j, dummy):
+                    board[i][j] = 'O'
+                else:
+                    board[i][j] = 'X'
+
 
 s = Solution()
 a = [["O", "O", "O"], ["O", "O", "O"], ["O", "O", "O"]]
+b = [["X", "X", "X", "X"], ["X", "O", "O", "X"], ["X", "X", "O", "X"], ["X", "O", "X", "X"]]
 s.solve1(a)
-print(a)
+s.solve2(b)
+print(b)
