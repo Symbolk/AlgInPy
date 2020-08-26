@@ -1,6 +1,6 @@
 from typing import List
 class Solution:
-    # dfs or backtrack in the solution tree!
+    # dfs or backtrack in the solution tree to find all answers
     def findSubsequences(self, nums: List[int]) -> List[List[int]]:
         N = len(nums)
         res = []
@@ -18,6 +18,7 @@ class Solution:
                     # select or not
                     cur.append(nums[j])
                     dfs(j, cur)
+                    # backtrack
                     cur.pop()
         dfs(-1, [])
         return res
