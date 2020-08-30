@@ -1,7 +1,7 @@
 class Solution:
     # O(n), O(n)
     def reverseWords(self, s: str) -> str:
-        # split() does strip() too
+        # split() does strip() by the way
         return ' '.join(s.split()[::-1])
 
         # return ' '.join(re.findall('[^ ]+', s)[::-1])
@@ -77,6 +77,7 @@ class Solution:
         while stack:
             res += stack.pop()
         return res
+
 
 
 sol = Solution()
