@@ -53,7 +53,7 @@ def build_tree(arr):
 arr = [3, 9, 20, None, None, 15, 7]
 node_list = build_tree(arr)
 
-
+# O(n), O(n)
 def levelOrder(root: TreeNode) -> List[List[int]]:
     if not root:
         return []
