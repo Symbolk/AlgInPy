@@ -32,6 +32,7 @@ class Solution:
 
     # only keep the latest presum
     # update max every time
+    # O(n), O(1)
     def maxSubArray2(self, nums: List[int]) -> int:
         if not nums:
             return 0
@@ -45,3 +46,9 @@ class Solution:
             res = max(cur, res)
             presum = cur
         return res
+
+    # rotated array: O(n), O(1)
+    def maxSubArray3(self, nums: List[int]) -> int:
+        for i in range(1, len(nums)):
+            nums[i] += max(nums[i - 1], 0)
+        return max(nums)
