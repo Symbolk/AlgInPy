@@ -4,13 +4,24 @@ def print_res(i, j):
 
 
 # O(n^2)
+
 def fun(n):
     for i in range(1, (n + 1) // 2):
         total = i
-        for j in range(1, (n + 1) // 2):
+        for j in range(1, (n + 1) // 2 + 1):
             total += (i + j)
             if total == n:
                 print_res(i, i + j)
+                break
+
+
+def fun3(n):
+    for i in range(1, (n + 1) // 2):
+        total = i
+        for j in range(i + 1, (n + 1) // 2 + 1):
+            total += j
+            if total == n:
+                print_res(i, j)
                 break
 
 
@@ -65,7 +76,7 @@ def fun2(n):
             total += j
 
 
-# fun(15)
+fun(15)
 fun0(15)
-# fun1(15)
-# fun2(15)
+fun1(15)
+fun2(15)
